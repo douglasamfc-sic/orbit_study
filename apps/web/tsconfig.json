@@ -1,0 +1,14 @@
+{
+	"extends": "../../tooling/tsconfig.base.json",
+	"compilerOptions": {
+		"outDir": "./dist",
+		"rootDir": ".",
+		"paths": {
+			"$lib/*": ["./src/shared/lib/*"],
+			"$features/*": ["./src/features/*"],
+			"$entities/*": ["./src/entities/*"],
+			"$ui/*": ["./src/shared/ui/*"]
+		}
+	},
+	"include": ["src", "vite.config.ts"]
+}

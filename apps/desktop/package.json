@@ -1,0 +1,13 @@
+{
+	"name": "@orbit/desktop",
+	"version": "0.0.1",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "tauri dev",
+		"build": "tauri build"
+	},
+	"dependencies": {
+		"@orbit/web": "workspace:*"
+	}
+}
