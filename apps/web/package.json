@@ -1,20 +1,27 @@
 {
-	"name": "@orbit/web",
-	"version": "0.0.1",
-	"private": true,
-	"type": "module",
-	"scripts": {
-		"dev": "vite",
-		"build": "vite build",
-		"typecheck": "tsc --noEmit"
-	},
-	"dependencies": {
-		"@orbit/core": "workspace:*",
-		"@orbit/db": "workspace:*",
-		"@orbit/ui": "workspace:*"
-	},
-	"devDependencies": {
-		"typescript": "^5.7.2",
-		"vite": "^6.0.0"
-	}
+  "name": "@orbit/web",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@orbit/core": "workspace:*",
+    "@orbit/db": "workspace:*",
+    "@orbit/ui": "workspace:*",
+    "bits-ui": "^2.18.0",
+    "lucide-svelte": "^1.0.1",
+    "svelte-spa-router": "^5.0.1",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^5.1.1",
+    "@types/node": "^25.6.0",
+    "svelte": "^5.55.4",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.0"
+  }
 }

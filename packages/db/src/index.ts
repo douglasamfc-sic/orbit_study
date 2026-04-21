@@ -1,4 +1,5 @@
-// @orbit/db — Persistence layer.
-// Implements repositories and database adapters; depends on @orbit/core for domain types.
-
-export const VERSION = "0.0.1";
+// @orbit/db — Camada de persistência
+export { createDatabase, getDatabase } from "./factory"
+export { runMigrations } from "./migrations"
+export * from "./repositories"
+export type { OrbitDB } from "./interfaces/db.interface"

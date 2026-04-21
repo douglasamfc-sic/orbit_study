@@ -1,16 +1,29 @@
 {
-	"name": "orbit-study",
-	"private": true,
-	"scripts": {
-		"dev": "pnpm -r --parallel run dev",
-		"build": "pnpm -r run build",
-		"lint": "biome check .",
-		"lint:fix": "biome check --write .",
-		"format": "biome format --write .",
-		"typecheck": "pnpm -r run typecheck"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "^1.9.4",
-		"typescript": "^5.7.2"
-	}
+  "name": "orbit-study",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm -r --parallel run dev",
+    "build": "pnpm -r run build",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "typecheck": "pnpm -r run typecheck",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "typescript": "^5.7.2"
+  },
+  "lint-staged": {
+    "*.{ts,js,svelte,json}": ["biome check --write --no-errors-on-unmatched"]
+  },
+  "pnpm": {
+    "overrides": {
+      "vite": "^6.4.2"
+    }
+  }
 }

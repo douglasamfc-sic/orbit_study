@@ -1,18 +1,19 @@
 {
-	"name": "@orbit/db",
-	"version": "0.0.1",
-	"private": true,
-	"type": "module",
-	"exports": {
-		".": "./src/index.ts"
-	},
-	"scripts": {
-		"typecheck": "tsc --noEmit"
-	},
-	"dependencies": {
-		"@orbit/core": "workspace:*"
-	},
-	"devDependencies": {
-		"typescript": "^5.7.2"
-	}
+  "name": "@orbit/db",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@orbit/core": "workspace:*",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
 }
