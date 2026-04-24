@@ -8,25 +8,37 @@ interface WorkerMessage {
   payload: { sql?: string; params?: unknown[] }
 }
 
-let sqlite: unknown = null
 let db: unknown = null
 
 async function initSQLite(): Promise<void> {
-  const { default: initSqlite } = await import("@sqlite.org/sqlite-wasm")
-  sqlite = await initSqlite({ print: console.log, printErr: console.error })
-  // OPFS — Origin Private File System (persistente, sem quota)
-  db = (sqlite as { open: (path: string) => unknown }).open("file:orbit.db?vfs=opfs")
+  const sqlite3InitModule = (await import("@sqlite.org/sqlite-wasm")).default
+  const sqlite3 = await sqlite3InitModule({ print: console.log, printErr: console.error })
+  const oo = sqlite3.oo1
+  if (oo.OpfsDb) {
+    db = new oo.OpfsDb("orbit.db")
+  } else {
+    db = new oo.DB("orbit.db", "ct")
+  }
   ;(db as { exec: (sql: string) => void }).exec("PRAGMA journal_mode=WAL;")
 }
 
 function handleQuery(sql: string, params: unknown[]): unknown[] {
-  const stmt = (db as { prepare: (sql: string) => unknown }).prepare(sql)
   const rows: unknown[] = []
-  ;(stmt as { bind: (p: unknown[]) => void }).bind(params)
-  while ((stmt as { step: () => boolean }).step()) {
-    rows.push((stmt as { getAsObject: () => unknown }).getAsObject())
-  }
-  ;(stmt as { free: () => void }).free()
+  ;(
+    db as {
+      exec: (opts: {
+        sql: string
+        bind?: unknown[]
+        rowMode: string
+        resultRows: unknown[][]
+      }) => void
+    }
+  ).exec({
+    sql,
+    bind: params,
+    rowMode: "object",
+    resultRows: rows as unknown[][],
+  })
   return rows
 }
 
@@ -35,19 +47,15 @@ function handleExecute(
   params: unknown[],
 ): { changes: number; lastInsertRowid: number } {
   const dbTyped = db as {
-    prepare: (sql: string) => {
-      bind: (p: unknown[]) => void
-      step: () => boolean
-      free: () => void
-    }
-    changes: () => number
-    lastInsertRowid: () => number
+    exec: (opts: { sql: string; bind?: unknown[] }) => void
+    changes: () => { changes: number }
+    lastInsertRowid: number
   }
-  const stmt = dbTyped.prepare(sql)
-  stmt.bind(params)
-  stmt.step()
-  stmt.free()
-  return { changes: dbTyped.changes(), lastInsertRowid: dbTyped.lastInsertRowid() }
+  dbTyped.exec({ sql, bind: params })
+  return {
+    changes: dbTyped.changes().changes,
+    lastInsertRowid: dbTyped.lastInsertRowid,
+  }
 }
 
 self.onconnect = (event: MessageEvent) => {

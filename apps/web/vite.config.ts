@@ -11,7 +11,11 @@ export default defineConfig({
       $features: resolve("./src/features"),
       $entities: resolve("./src/entities"),
       $ui: resolve("./src/shared/ui"),
+      "@tauri-apps/plugin-sql": resolve("./src/app/mocks/tauri-sql.mock.ts"),
     },
+  },
+  optimizeDeps: {
+    exclude: ["@sqlite.org/sqlite-wasm"],
   },
   build: {
     rollupOptions: {
